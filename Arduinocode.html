@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="pics/home.png">
+    <meta charset="utf-8">
+   <title>Home</title>
+   <link rel="stylesheet" href="opmaak.css">
+   <link href="https://fonts.googleapis.com/css?family=Codystar" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Dit is de code die gebruikt is in de arduino reactiegame:</h1>
+    <p>const int Yled = 8;
+const int Rled = 9;
+const int Gled = 10;
+const int knop = A0;
+const int piezo = 12;
+
+
+long maxWachtTijd = 500;
+const long scoreShowTijd = 1000;
+const long textShowTijd = 3000;
+
+#include <LiquidCrystal.h>
+
+const int rs = 13, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+long interval = 1000;
+int nowState = 0;
+long averageWaitTime = maxWachtTijd;
+int wins = 0;
+int textShowState = 0;
+
+long nextEvent = millis() + interval;
+long nextTextEvent = millis() + textShowTijd;
+
+void setup() {
+  pinMode(Yled, OUTPUT);
+  pinMode(Rled, OUTPUT);
+  pinMode(Gled, OUTPUT);
+  pinMode(piezo, OUTPUT);
+  lcd.begin(16, 2);
+  lcd.setCursor(0,0);
+  lcd.print("Press the button!");
+}
+
+void showNewScore(int ReactionTime) {
+  clearLayer(0);
+  lcd.setCursor(0, 0);
+  lcd.print("Points: ");
+  lcd.print(wins);
+  showData(textShowState);
+}
+
+void onTextEvent() {
+  textShowState += 1;
+  if (textShowState > 1) {
+    textShowState = 0;
+  }
+  showData(textShowState);
+  nextTextEvent = millis() + textShowTijd;
+}
+
+void showData(int dataType) {
+  clearLayer(1);
+  lcd.setCursor(0,1);
+  if (dataType == 0) {
+    lcd.print("Average:");
+    lcd.print(averageWaitTime/1000.0);
+    lcd.print(" sec.");
+  } else if (dataType == 1) {
+    lcd.print("Level:");
+    lcd.print(round(floor(wins/10.0)));
+  }
+}
+
+void clearLayer(int layer) {
+  lcd.setCursor(0, layer);
+  lcd.print("                ");
+}
+
+void setScore(long reactionDelay) {
+  if (reactionDelay >= 0 and reactionDelay <= 1000) {
+    averageWaitTime += (reactionDelay - averageWaitTime) / 10;
+  }
+  showNewScore(reactionDelay);
+}
+
+void dificulty() {
+  if(wins%10 == 0){
+    maxWachtTijd -= 100;
+  }
+}
+
+void win() {
+  wins += 1;
+  dificulty();
+  setScore(millis()-nextEvent);
+  digitalWrite(Gled, HIGH);
+  nextEvent = millis() + scoreShowTijd;
+  nowState = 2; // show score++++
+  tone(piezo, 1500, 500);
+}
+
+void loze() {
+  wins = 0;
+  dificulty();
+  maxWachtTijd = 500;
+  setScore(millis()-nextEvent);
+  digitalWrite(Rled, HIGH);
+  nextEvent = millis() + scoreShowTijd;
+  nowState = 2; // show score
+  tone(piezo, 500, 1000);
+}
+
+void resetLeds() {
+  digitalWrite(Yled, LOW);
+  digitalWrite(Rled, LOW);
+  digitalWrite(Gled, LOW);
+}
+
+void waitRandomly() {
+  nowState = 0; // wait randomly
+  nextEvent = millis() + random(500,1500);
+}
+
+void waitForReaction() {
+  nowState = 1; // wait for reaction
+  digitalWrite(Yled, HIGH);
+  tone(piezo, 1000, maxWachtTijd);
+}
+
+void loop() {
+  Serial.println(maxWachtTijd);
+  if (nowState == 0) { // wait randomly
+    if (digitalRead(knop) == HIGH) {
+      loze();
+    }
+    if (millis() >= nextEvent) {
+      waitForReaction();
+    }
+  } else if (nowState == 1) { // wait for reaction
+    if (digitalRead(knop) == HIGH) {
+      digitalWrite(Yled, LOW);
+      if (millis() <= nextEvent + maxWachtTijd) {
+        win();
+      } else {
+        loze();
+      }
+    }
+  } else if (nowState == 2) {
+    if (millis() >= nextEvent && digitalRead(knop) == LOW) {
+      resetLeds();
+      waitRandomly();
+    }
+  }
+  if (nextTextEvent <= millis()) {
+    onTextEvent();
+  }
+}</p>
+
+  </body>
+</html>
