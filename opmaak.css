@@ -31,6 +31,7 @@ header {
 }
 
 p{
+
   font-size: 100%;
   font-family: 'Codystar', cursive;
   color: white;
@@ -42,9 +43,7 @@ p{
   padding-right: 100px;
 
 }
-
-
-#about {
+#About {
     font-size: 100%;
     font-family: 'Codystar', cursive;
     color: white;
