@@ -18,10 +18,10 @@ h1 {
 
 header {
   position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -200px;
-    margin-left: -300px;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -300px;
   width: 960px;
   height: 150px;
 }
@@ -29,21 +29,21 @@ header {
 #volgme {
   clear: both;
   float: right;
+  margin-right: 5%;
 }
 
-p{
-
+p {
   font-size: 100%;
   font-family: 'Codystar', cursive;
   color: white;
   text-align: right;
   text-shadow: 5px 5px 7px #000000;
   align-items: center;
-  margin-top: 400px;
+  margin-top: 30%;
   font-weight: bold;
-  padding-right: 100px;
-
+  margin-right: 5%;
 }
+
 #About {
     font-size: 100%;
     font-family: 'Codystar', cursive;
@@ -53,21 +53,18 @@ p{
     align-items: center;
     margin-top: 300px;
     font-weight: bold;
-    padding-right: 100px;
+    margin-right: 100px;
 }
 
 h3 {
-
   font-size: 100%;
   font-family: 'Codystar', cursive;
   color: white;
   text-align: right;
   text-shadow: 5px 5px 7px #000000;
   align-items: center;
-
   font-weight: bold;
-  padding-right: 100px;
-
+  margin-right: 100px;
 }
 
 header h1 {
@@ -107,7 +104,7 @@ ul li {
   color: white;
   font-weight: bold;
   text-shadow: 5px 5px 7px #000000;
-
+  margin-right: 5%
 }
 
 section {
@@ -137,19 +134,19 @@ section article {
 }
 
 #sidebar2 {
-  top: 150px;
-}
-
-#sidebar3 {
-  top: 250px;
-}
-
-#sidebar4 {
   top: 200px;
 }
 
-#sidebar5 {
+#sidebar3 {
   top: 300px;
+}
+
+#sidebar4 {
+  top: 400px;
+}
+
+#sidebar5 {
+  top: 500px;
 }
 
 .sidebar:hover {
@@ -157,7 +154,7 @@ section article {
 }
 
 .sideimg {
-  height: 30px;
+  height: 50px;
   padding-left: 3px;
   float: left;
 }
@@ -166,7 +163,6 @@ section article {
   padding-left: 5px;
   float: left;
 }
-
 
 .contactpic {
   height: 50px;
@@ -192,7 +188,7 @@ a:link {
 
 a:visited{
   text-decoration: none;
-  color: darkgrey;
+  color: lightblue;
 }
 a:hover{
   text-decoration: none;
@@ -203,9 +199,26 @@ p.ikbendaniel{
   font-size: 300%;
 }
 
+#more {display: none;}
 
 .video{
   margin: auto;
   margin-top: 7%;
   margin-left: 17%;
+}
+
+.button {
+  background-color: grey;
+  border: none;
+  font-size: 100%;
+  font-family: 'Codystar', cursive;
+  color: lightblue;
+  text-align: right;
+  text-shadow: 5px 5px 7px #000000;
+  align-items: center;
+  font-weight: bold;
+}
+
+p.dots{
+  margin-top: auto;
 }
